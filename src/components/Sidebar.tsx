@@ -14,6 +14,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Flame,
+  X,
 } from "lucide-react";
 
 const navItems = [
@@ -33,28 +34,43 @@ const bottomNavItems = [
 interface SidebarProps {
   collapsed: boolean;
   onToggle: () => void;
+  onMobileClose?: () => void;
 }
 
-export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
+export default function Sidebar({
+  collapsed,
+  onToggle,
+  onMobileClose,
+}: SidebarProps) {
   const pathname = usePathname();
 
   return (
     <aside
-      className={`fixed left-0 top-0 z-40 flex h-screen flex-col backdrop-blur-xl border-r border-black/5 transition-all duration-300 dark:border-white/10 ${
+      className={`flex h-full flex-col backdrop-blur-xl border-r border-black/5 transition-all duration-300 dark:border-white/10 ${
         collapsed ? "w-18" : "w-65"
       }`}
       style={{ backgroundColor: "var(--sidebar-bg-translucent)" }}
     >
       {/* Logo */}
-      <div className="flex h-16 items-center gap-3 border-b border-black/5 px-5 dark:border-white/10">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary shadow-lg shadow-primary/25">
-          <Flame className="h-5 w-5 text-white" />
+      <div className="flex h-16 items-center justify-between border-b border-black/5 px-5 dark:border-white/10">
+        <div className="flex items-center gap-3">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary shadow-lg shadow-primary/25">
+            <Flame className="h-5 w-5 text-white" />
+          </div>
+          {!collapsed && (
+            <span className="text-lg font-bold tracking-tight text-black dark:text-white animate-slide-in-left">
+              Spice Kitchen
+            </span>
+          )}
         </div>
-        {!collapsed && (
-          <span className="text-lg font-bold tracking-tight text-black dark:text-white animate-slide-in-left">
-            Spice Kitchen
-          </span>
-        )}
+        {/* Close button — visible only on mobile */}
+        <button
+          onClick={onMobileClose}
+          className="flex md:hidden h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition-all hover:bg-black/5 hover:text-foreground dark:hover:bg-white/5 dark:hover:text-white"
+          aria-label="Close sidebar"
+        >
+          <X className="h-5 w-5" />
+        </button>
       </div>
 
       {/* Navigation */}
@@ -70,6 +86,7 @@ export default function Sidebar({ collapsed, onToggle }: SidebarProps) {
               <li key={item.label}>
                 <Link
                   href={item.href}
+                  onClick={onMobileClose}
                   className={`group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
                     isActive
                       ? "bg-primary text-white shadow-lg shadow-primary/25"

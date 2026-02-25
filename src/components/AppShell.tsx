@@ -13,16 +13,8 @@ interface AppShellProps {
 export default function AppShell({ children, title, subtitle }: AppShellProps) {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
 
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  // Close mobile sidebar on route change or escape
+  // Close mobile sidebar on escape
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") setMobileOpen(false);
@@ -34,44 +26,38 @@ export default function AppShell({ children, title, subtitle }: AppShellProps) {
   return (
     <div className="flex min-h-screen bg-background overflow-x-hidden">
       {/* Mobile overlay backdrop */}
-      {mobileOpen && isMobile && (
+      {mobileOpen && (
         <div
           className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity md:hidden"
           onClick={() => setMobileOpen(false)}
         />
       )}
 
-      {/* Sidebar — hidden off-screen on mobile, slides in when mobileOpen */}
+      {/* Sidebar */}
       <div
         className={`
           fixed left-0 top-0 z-50 h-screen transition-transform duration-300 ease-in-out
+          ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
-          ${isMobile ? (mobileOpen ? "translate-x-0" : "-translate-x-full") : ""}
         `}
       >
         <Sidebar
-          collapsed={isMobile ? false : collapsed}
-          onToggle={() => {
-            if (isMobile) {
-              setMobileOpen(false);
-            } else {
-              setCollapsed(!collapsed);
-            }
-          }}
+          collapsed={collapsed}
+          onToggle={() => setCollapsed(!collapsed)}
+          onMobileClose={() => setMobileOpen(false)}
         />
       </div>
 
       {/* Main content area */}
       <div
-        className={`flex min-w-0 flex-1 flex-col transition-all duration-300 ease-in-out ${
-          isMobile ? "ml-0" : collapsed ? "ml-18" : "ml-65"
+        className={`flex min-w-0 flex-1 flex-col transition-all duration-300 ease-in-out ml-0 ${
+          collapsed ? "md:ml-18" : "md:ml-65"
         }`}
       >
         <Header
           title={title}
           subtitle={subtitle}
           onMenuClick={() => setMobileOpen(!mobileOpen)}
-          showMenuButton={isMobile}
         />
 
         <main className="flex-1 overflow-x-hidden overflow-y-auto p-4 sm:p-6">
