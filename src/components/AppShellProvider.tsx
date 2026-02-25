@@ -5,11 +5,13 @@ import {
   useContext,
   useState,
   useCallback,
+  useEffect,
   type ReactNode,
 } from "react";
 
 interface AppShellContextValue {
   collapsed: boolean;
+  mounted: boolean;
   mobileOpen: boolean;
   toggleCollapse: () => void;
   setMobileOpen: (open: boolean) => void;
@@ -28,18 +30,18 @@ export function useAppShell() {
 
 export function AppShellProvider({ children }: { children: ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [hydrated, setHydrated] = useState(false);
   const [pageTitle, setPageTitle] = useState("Restaurant Dashboard");
   const [pageSubtitle, setPageSubtitle] = useState("Welcome back, Chef Arth");
 
-  // Sync from localStorage once after mount — no flash because
-  // AppShellProvider lives in the root layout and never remounts.
-  if (typeof window !== "undefined" && !hydrated) {
+  // Sync from localStorage AFTER hydration to avoid mismatch
+  useEffect(() => {
     const stored = localStorage.getItem("sidebar-collapsed");
     if (stored === "true") setCollapsed(true);
-    setHydrated(true);
-  }
+    // Small delay so the DOM updates without transition
+    requestAnimationFrame(() => setMounted(true));
+  }, []);
 
   const toggleCollapse = useCallback(() => {
     setCollapsed((prev) => {
@@ -60,6 +62,7 @@ export function AppShellProvider({ children }: { children: ReactNode }) {
     <AppShellContext.Provider
       value={{
         collapsed,
+        mounted,
         mobileOpen,
         toggleCollapse,
         setMobileOpen,

@@ -12,6 +12,7 @@ interface AppShellProps {
 export default function AppShell({ children }: AppShellProps) {
   const {
     collapsed,
+    mounted,
     mobileOpen,
     toggleCollapse,
     setMobileOpen,
@@ -28,6 +29,11 @@ export default function AppShell({ children }: AppShellProps) {
     return () => document.removeEventListener("keydown", handleEscape);
   }, [setMobileOpen]);
 
+  // Transition classes — disabled until mounted to prevent flash
+  const transitionClass = mounted
+    ? "transition-all duration-300 ease-in-out"
+    : "";
+
   return (
     <div className="flex min-h-screen bg-background overflow-x-hidden">
       {/* Mobile overlay backdrop */}
@@ -41,7 +47,7 @@ export default function AppShell({ children }: AppShellProps) {
       {/* Sidebar */}
       <div
         className={`
-          fixed left-0 top-0 z-50 h-screen transition-transform duration-300 ease-in-out
+          fixed left-0 top-0 z-50 h-screen ${mounted ? "transition-transform duration-300 ease-in-out" : ""}
           ${mobileOpen ? "translate-x-0" : "-translate-x-full"}
           md:translate-x-0
         `}
@@ -50,12 +56,13 @@ export default function AppShell({ children }: AppShellProps) {
           collapsed={collapsed}
           onToggle={toggleCollapse}
           onMobileClose={() => setMobileOpen(false)}
+          suppressTransition={!mounted}
         />
       </div>
 
       {/* Main content area */}
       <div
-        className={`flex min-w-0 flex-1 flex-col transition-all duration-300 ease-in-out ml-0 ${
+        className={`flex min-w-0 flex-1 flex-col ${transitionClass} ml-0 ${
           collapsed ? "md:ml-18" : "md:ml-65"
         }`}
       >
