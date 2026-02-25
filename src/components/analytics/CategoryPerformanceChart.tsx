@@ -69,8 +69,8 @@ export default function CategoryPerformanceChart() {
         </p>
       </div>
 
-      <div className="h-80 w-full">
-        <ResponsiveContainer width="100%" height="100%">
+      <div className="h-80 w-full min-w-0">
+        <ResponsiveContainer width="100%" height="100%" minWidth={0}>
           <BarChart
             data={sorted}
             layout="vertical"

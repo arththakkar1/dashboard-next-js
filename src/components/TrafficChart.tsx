@@ -124,8 +124,8 @@ export default function TrafficChart() {
         </div>
       </div>
 
-      <div className="h-75 w-full">
-        <ResponsiveContainer width="100%" height="100%">
+      <div className="h-75 w-full min-w-0">
+        <ResponsiveContainer width="100%" height="100%" minWidth={0}>
           <BarChart
             data={chartData}
             margin={{ top: 5, right: 5, left: -20, bottom: 0 }}
