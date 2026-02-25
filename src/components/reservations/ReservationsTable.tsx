@@ -350,7 +350,7 @@ export default function ReservationsTable({
       </div>
 
       {/* Desktop Table */}
-      <div className="hidden lg:block overflow-x-auto">
+      <div className="hidden lg:block overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <table className="w-full">
           <thead>
             <tr className="border-b border-border">

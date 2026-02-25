@@ -1,6 +1,7 @@
 "use client";
 
 import { MoreHorizontal, ExternalLink } from "lucide-react";
+import Link from "next/link";
 
 const orders = [
   {
@@ -79,13 +80,16 @@ export default function RecentOrders() {
           </h3>
           <p className="text-sm text-muted-foreground">Latest food orders</p>
         </div>
-        <button className="flex items-center gap-1.5 rounded-lg bg-secondary px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-border">
+        <Link
+          href={"/orders"}
+          className="flex items-center gap-1.5 rounded-lg bg-secondary px-3 py-1.5 text-xs font-medium text-foreground transition-colors hover:bg-border"
+        >
           View All
           <ExternalLink className="h-3 w-3" />
-        </button>
+        </Link>
       </div>
 
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         <table className="w-full">
           <thead>
             <tr className="border-b border-border">

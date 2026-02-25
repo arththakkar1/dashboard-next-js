@@ -1,6 +1,6 @@
 "use client";
 
-import { Search, SlidersHorizontal, Plus } from "lucide-react";
+import { Search, SlidersHorizontal } from "lucide-react";
 
 export type MenuCategory =
   | "all"
@@ -18,7 +18,11 @@ interface MenuFiltersProps {
   onSearchChange: (query: string) => void;
 }
 
-const tabs: { label: string; value: MenuCategory; count: number }[] = [
+const tabs: {
+  label: string;
+  value: MenuCategory;
+  count: number;
+}[] = [
   { label: "All Items", value: "all", count: 156 },
   { label: "Starters", value: "starters", count: 28 },
   { label: "Main Course", value: "mains", count: 42 },
@@ -35,26 +39,26 @@ export default function MenuFilters({
   onSearchChange,
 }: MenuFiltersProps) {
   return (
-    <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-      {/* Category Tabs */}
-      <div className="overflow-x-auto">
-        <div className="flex items-center gap-1 rounded-xl bg-secondary p-1 w-max min-w-full sm:min-w-0">
+    <div className="space-y-4">
+      {/* Category Tabs — scrollable row with hidden scrollbar */}
+      <div className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+        <div className="flex items-center gap-2 w-max min-w-full sm:min-w-0">
           {tabs.map((tab) => (
             <button
               key={tab.value}
               onClick={() => onCategoryChange(tab.value)}
-              className={`flex items-center gap-1.5 rounded-lg px-3 py-2 text-xs sm:text-sm sm:px-4 font-medium whitespace-nowrap transition-all duration-200 ${
+              className={`flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-medium whitespace-nowrap border transition-all duration-200 ${
                 activeCategory === tab.value
-                  ? "bg-card text-foreground shadow-sm"
-                  : "text-muted-foreground hover:text-foreground"
+                  ? "border-primary bg-primary/10 text-primary shadow-sm shadow-primary/10"
+                  : "border-border bg-card text-muted-foreground hover:text-foreground hover:border-primary/30 hover:bg-secondary"
               }`}
             >
               {tab.label}
               <span
                 className={`rounded-full px-1.5 py-0.5 text-[10px] font-bold ${
                   activeCategory === tab.value
-                    ? "bg-primary/10 text-primary"
-                    : "bg-muted text-muted-foreground"
+                    ? "bg-primary/15 text-primary"
+                    : "bg-secondary text-muted-foreground"
                 }`}
               >
                 {tab.count}
@@ -64,16 +68,16 @@ export default function MenuFilters({
         </div>
       </div>
 
-      {/* Search & Actions */}
+      {/* Search & Filters */}
       <div className="flex items-center gap-3">
-        <div className="relative flex-1 lg:flex-none">
+        <div className="relative flex-1">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input
             type="text"
             placeholder="Search menu items..."
             value={searchQuery}
             onChange={(e) => onSearchChange(e.target.value)}
-            className="h-10 w-full lg:w-64 rounded-xl border border-border bg-card pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+            className="h-10 w-full rounded-xl border border-border bg-card pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
           />
         </div>
         <button className="flex h-10 shrink-0 items-center gap-2 rounded-xl border border-border bg-card px-4 text-sm font-medium text-foreground transition-colors hover:bg-secondary">
