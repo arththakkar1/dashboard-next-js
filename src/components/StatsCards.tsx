@@ -62,7 +62,7 @@ export default function StatsCards() {
       {stats.map((stat, index) => (
         <div
           key={stat.title}
-          className={`animate-fade-in stagger-${index + 1} group relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5`}
+          className="group relative overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm transition-all duration-300 hover:shadow-md hover:-translate-y-0.5"
         >
           {/* Gradient accent top line */}
           <div
