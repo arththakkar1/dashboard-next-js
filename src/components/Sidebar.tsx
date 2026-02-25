@@ -27,8 +27,8 @@ const navItems = [
 ];
 
 const bottomNavItems = [
-  { icon: HelpCircle, label: "Help Center" },
-  { icon: LogOut, label: "Log Out" },
+  { icon: HelpCircle, label: "Help Center", href: "/help-center" },
+  { icon: LogOut, label: "Log Out", href: undefined },
 ];
 
 interface SidebarProps {
@@ -113,18 +113,45 @@ export default function Sidebar({
       {/* Bottom nav */}
       <div className="border-t border-black/5 px-3 py-4 dark:border-white/10">
         <ul className="space-y-1">
-          {bottomNavItems.map((item) => (
-            <li key={item.label}>
-              <button
-                className={`group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-sidebar-foreground transition-all duration-200 hover:bg-black/5 hover:text-foreground dark:hover:bg-white/5 dark:hover:text-white ${
-                  collapsed ? "justify-center" : ""
-                }`}
-              >
-                <item.icon className="h-5 w-5 shrink-0 text-sidebar-foreground group-hover:text-foreground dark:group-hover:text-white" />
-                {!collapsed && <span>{item.label}</span>}
-              </button>
-            </li>
-          ))}
+          {bottomNavItems.map((item) => {
+            if (item.href) {
+              const isActive = pathname.startsWith(item.href);
+              return (
+                <li key={item.label}>
+                  <Link
+                    href={item.href}
+                    onClick={onMobileClose}
+                    className={`group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
+                      isActive
+                        ? "bg-primary text-white shadow-lg shadow-primary/25"
+                        : "text-sidebar-foreground hover:bg-black/5 hover:text-foreground dark:hover:bg-white/5 dark:hover:text-white"
+                    } ${collapsed ? "justify-center" : ""}`}
+                  >
+                    <item.icon
+                      className={`h-5 w-5 shrink-0 ${
+                        isActive
+                          ? "text-white"
+                          : "text-sidebar-foreground group-hover:text-foreground dark:group-hover:text-white"
+                      }`}
+                    />
+                    {!collapsed && <span>{item.label}</span>}
+                  </Link>
+                </li>
+              );
+            }
+            return (
+              <li key={item.label}>
+                <button
+                  className={`group flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-sidebar-foreground transition-all duration-200 hover:bg-black/5 hover:text-foreground dark:hover:bg-white/5 dark:hover:text-white ${
+                    collapsed ? "justify-center" : ""
+                  }`}
+                >
+                  <item.icon className="h-5 w-5 shrink-0 text-sidebar-foreground group-hover:text-foreground dark:group-hover:text-white" />
+                  {!collapsed && <span>{item.label}</span>}
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </div>
 
