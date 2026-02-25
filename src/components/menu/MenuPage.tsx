@@ -5,8 +5,10 @@ import MenuStats from "@/components/menu/MenuStats";
 import MenuFilters, { type MenuCategory } from "@/components/menu/MenuFilters";
 import MenuGrid from "@/components/menu/MenuGrid";
 import AddItemModal from "@/components/menu/AddItemModal";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 export default function MenuPage() {
+  usePageMeta("Menu", "Manage your restaurant menu");
   const [activeCategory, setActiveCategory] = useState<MenuCategory>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);

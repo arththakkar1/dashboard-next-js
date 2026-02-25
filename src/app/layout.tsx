@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { AppShellProvider } from "@/components/AppShellProvider";
+import AppShell from "@/components/AppShell";
 import "./globals.css";
 
 const inter = Inter({
@@ -30,7 +32,11 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} antialiased`}
       >
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <AppShellProvider>
+            <AppShell>{children}</AppShell>
+          </AppShellProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

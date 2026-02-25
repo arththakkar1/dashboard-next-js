@@ -1,18 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
+import { useAppShell } from "@/components/AppShellProvider";
 
 interface AppShellProps {
   children: React.ReactNode;
-  title?: string;
-  subtitle?: string;
 }
 
-export default function AppShell({ children, title, subtitle }: AppShellProps) {
-  const [collapsed, setCollapsed] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
+export default function AppShell({ children }: AppShellProps) {
+  const {
+    collapsed,
+    mobileOpen,
+    toggleCollapse,
+    setMobileOpen,
+    pageTitle,
+    pageSubtitle,
+  } = useAppShell();
 
   // Close mobile sidebar on escape
   useEffect(() => {
@@ -21,7 +26,7 @@ export default function AppShell({ children, title, subtitle }: AppShellProps) {
     };
     document.addEventListener("keydown", handleEscape);
     return () => document.removeEventListener("keydown", handleEscape);
-  }, []);
+  }, [setMobileOpen]);
 
   return (
     <div className="flex min-h-screen bg-background overflow-x-hidden">
@@ -43,7 +48,7 @@ export default function AppShell({ children, title, subtitle }: AppShellProps) {
       >
         <Sidebar
           collapsed={collapsed}
-          onToggle={() => setCollapsed(!collapsed)}
+          onToggle={toggleCollapse}
           onMobileClose={() => setMobileOpen(false)}
         />
       </div>
@@ -55,8 +60,8 @@ export default function AppShell({ children, title, subtitle }: AppShellProps) {
         }`}
       >
         <Header
-          title={title}
-          subtitle={subtitle}
+          title={pageTitle}
+          subtitle={pageSubtitle}
           onMenuClick={() => setMobileOpen(!mobileOpen)}
         />
 

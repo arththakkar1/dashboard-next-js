@@ -5,10 +5,12 @@ import OrdersStats from "@/components/orders/OrdersStats";
 import OrderFilters from "@/components/orders/OrderFilters";
 import OrdersTable from "@/components/orders/OrdersTable";
 import NewOrderModal from "@/components/orders/NewOrderModal";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 type FilterTab = "all" | "dine-in" | "delivery" | "takeaway";
 
 export default function OrdersPage() {
+  usePageMeta("Orders", "Manage all restaurant orders");
   const [activeFilter, setActiveFilter] = useState<FilterTab>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [isNewOrderOpen, setIsNewOrderOpen] = useState(false);

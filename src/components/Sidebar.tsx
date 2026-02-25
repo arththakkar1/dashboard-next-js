@@ -7,7 +7,7 @@ import {
   UtensilsCrossed,
   ClipboardList,
   BookOpen,
-  ChefHat,
+  BarChart3,
   UsersRound,
   HelpCircle,
   LogOut,
@@ -22,7 +22,7 @@ const navItems = [
   { icon: ClipboardList, label: "Orders", href: "/orders" },
   { icon: BookOpen, label: "Menu", href: "/menu" },
   { icon: UtensilsCrossed, label: "Reservations", href: "/reservations" },
-  { icon: ChefHat, label: "Kitchen", href: "/kitchen" },
+  { icon: BarChart3, label: "Analytics", href: "/analytics" },
   { icon: UsersRound, label: "Staff", href: "/staff" },
 ];
 
@@ -46,7 +46,7 @@ export default function Sidebar({
 
   return (
     <aside
-      className={`flex h-full flex-col backdrop-blur-xl border-r border-black/5 transition-all duration-300 dark:border-white/10 ${
+      className={`flex h-full flex-col backdrop-blur-xl border-r border-black/5 dark:border-white/10 transition-all duration-300 ${
         collapsed ? "w-18" : "w-65"
       }`}
       style={{ backgroundColor: "var(--sidebar-bg-translucent)" }}
@@ -58,7 +58,7 @@ export default function Sidebar({
             <Flame className="h-5 w-5 text-white" />
           </div>
           {!collapsed && (
-            <span className="text-lg font-bold tracking-tight text-black dark:text-white animate-slide-in-left">
+            <span className="text-lg font-bold tracking-tight text-black dark:text-white">
               Spice Kitchen
             </span>
           )}

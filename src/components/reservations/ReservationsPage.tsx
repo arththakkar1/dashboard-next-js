@@ -7,8 +7,10 @@ import ReservationsFilters, {
 } from "@/components/reservations/ReservationsFilters";
 import ReservationsTable from "@/components/reservations/ReservationsTable";
 import NewReservationModal from "@/components/reservations/NewReservationModal";
+import { usePageMeta } from "@/hooks/usePageMeta";
 
 export default function ReservationsPage() {
+  usePageMeta("Reservations", "Manage table bookings and guest reservations");
   const [activeFilter, setActiveFilter] = useState<ReservationStatus>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [isNewModalOpen, setIsNewModalOpen] = useState(false);
