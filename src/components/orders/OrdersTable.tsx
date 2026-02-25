@@ -229,11 +229,13 @@ const typeLabels: Record<string, string> = {
 interface OrdersTableProps {
   filterType: "all" | "dine-in" | "delivery" | "takeaway";
   searchQuery: string;
+  onNewOrder?: () => void;
 }
 
 export default function OrdersTable({
   filterType,
   searchQuery,
+  onNewOrder,
 }: OrdersTableProps) {
   const [currentPage, setCurrentPage] = useState(1);
   const perPage = 8;
@@ -267,7 +269,10 @@ export default function OrdersTable({
           </p>
         </div>
         <div className="flex items-center gap-2">
-          <button className="flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-xs font-medium text-white shadow-lg shadow-primary/25 transition-all hover:bg-primary-dark hover:scale-105 active:scale-95">
+          <button
+            onClick={onNewOrder}
+            className="flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-xs font-medium text-white shadow-lg shadow-primary/25 transition-all hover:bg-primary-dark hover:scale-105 active:scale-95"
+          >
             + New Order
           </button>
         </div>

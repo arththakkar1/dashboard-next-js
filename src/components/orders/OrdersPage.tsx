@@ -4,12 +4,14 @@ import { useState } from "react";
 import OrdersStats from "@/components/orders/OrdersStats";
 import OrderFilters from "@/components/orders/OrderFilters";
 import OrdersTable from "@/components/orders/OrdersTable";
+import NewOrderModal from "@/components/orders/NewOrderModal";
 
 type FilterTab = "all" | "dine-in" | "delivery" | "takeaway";
 
 export default function OrdersPage() {
   const [activeFilter, setActiveFilter] = useState<FilterTab>("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const [isNewOrderOpen, setIsNewOrderOpen] = useState(false);
 
   return (
     <div className="space-y-6 min-w-0">
@@ -30,8 +32,18 @@ export default function OrdersPage() {
 
       {/* Orders Table */}
       <section>
-        <OrdersTable filterType={activeFilter} searchQuery={searchQuery} />
+        <OrdersTable
+          filterType={activeFilter}
+          searchQuery={searchQuery}
+          onNewOrder={() => setIsNewOrderOpen(true)}
+        />
       </section>
+
+      {/* New Order Modal */}
+      <NewOrderModal
+        isOpen={isNewOrderOpen}
+        onClose={() => setIsNewOrderOpen(false)}
+      />
     </div>
   );
 }
