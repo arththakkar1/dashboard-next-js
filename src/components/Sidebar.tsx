@@ -54,7 +54,7 @@ export default function Sidebar({
       style={{ backgroundColor: "var(--sidebar-bg-translucent)" }}
     >
       {/* Logo */}
-      <div className="flex h-17 items-center justify-between border-b border-black/5 px-5 dark:border-white/10">
+      <div className="flex h-16 items-center justify-between border-b border-black/5 px-5 dark:border-white/10">
         <div className="flex items-center gap-3">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary shadow-lg shadow-primary/25">
             <Flame className="h-5 w-5 text-white" />
