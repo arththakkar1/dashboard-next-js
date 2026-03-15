@@ -2,6 +2,8 @@
 
 import { Search, Bell, Sun, Moon, ChevronDown, Menu } from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
+import SearchModal from "./SearchModal";
+import { useState, useEffect } from "react";
 
 interface HeaderProps {
   title?: string;
@@ -15,6 +17,27 @@ export default function Header({
   onMenuClick,
 }: HeaderProps) {
   const { theme, toggleTheme } = useTheme();
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [shortcutKey, setShortcutKey] = useState("⌘K");
+
+  useEffect(() => {
+    if (
+      navigator.userAgent.toLowerCase().includes("win") ||
+      navigator.userAgent.toLowerCase().includes("linux")
+    ) {
+      setShortcutKey("Ctrl K");
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setIsSearchOpen((prev) => !prev);
+      }
+    };
+    
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-2 border-b border-border bg-card/80 px-3 sm:px-6 backdrop-blur-md transition-colors">
@@ -40,17 +63,16 @@ export default function Header({
 
       {/* Center: Search */}
       <div className="hidden lg:flex items-center">
-        <div className="relative">
+        <button
+          onClick={() => setIsSearchOpen(true)}
+          className="relative flex items-center h-10 w-72 cursor-pointer rounded-xl border border-border bg-secondary pl-10 pr-4 text-sm text-muted-foreground transition-all hover:border-primary/50 hover:bg-secondary/80 focus:outline-none focus:ring-2 focus:ring-primary/20"
+        >
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <input
-            type="text"
-            placeholder="Search orders, menu, tables..."
-            className="h-10 w-72 rounded-xl border border-border bg-secondary pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground transition-all focus:w-80 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
-          />
-          <kbd className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md border border-border bg-card px-1.5 py-0.5 text-[10px] font-mono text-muted-foreground">
-            ⌘K
+          <span className="text-muted-foreground">Search orders, menu, tables...</span>
+          <kbd className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md border border-border bg-card px-1.5 py-0.5 text-[10px] font-mono font-medium text-muted-foreground">
+            {shortcutKey}
           </kbd>
-        </div>
+        </button>
       </div>
 
       {/* Right: Actions */}
@@ -94,6 +116,7 @@ export default function Header({
           <ChevronDown className="h-3.5 w-3.5 text-muted-foreground hidden md:block" />
         </button>
       </div>
+      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </header>
   );
 }
