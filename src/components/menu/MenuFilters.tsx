@@ -47,7 +47,7 @@ export default function MenuFilters({
             <button
               key={tab.value}
               onClick={() => onCategoryChange(tab.value)}
-              className={`flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-medium whitespace-nowrap border transition-all duration-200 ${
+              className={`flex cursor-pointer items-center gap-2 rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-medium whitespace-nowrap border transition-all duration-200 ${
                 activeCategory === tab.value
                   ? "border-primary bg-primary/10 text-primary shadow-sm shadow-primary/10"
                   : "border-border bg-card text-muted-foreground hover:text-foreground hover:border-primary/30 hover:bg-secondary"
@@ -80,7 +80,7 @@ export default function MenuFilters({
             className="h-10 w-full rounded-xl border border-border bg-card pl-10 pr-4 text-sm text-foreground placeholder:text-muted-foreground transition-all focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
           />
         </div>
-        <button className="flex h-10 shrink-0 items-center gap-2 rounded-xl border border-border bg-card px-4 text-sm font-medium text-foreground transition-colors hover:bg-secondary">
+        <button className="flex h-10 cursor-pointer shrink-0 items-center gap-2 rounded-xl border border-border bg-card px-4 text-sm font-medium text-foreground transition-colors hover:bg-secondary">
           <SlidersHorizontal className="h-4 w-4" />
           <span className="hidden sm:inline">Filters</span>
         </button>

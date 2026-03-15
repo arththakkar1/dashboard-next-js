@@ -42,7 +42,7 @@ export default function StaffFilters({
           <button
             key={role.value}
             onClick={() => onRoleChange(role.value)}
-            className={`whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold transition-all ${
+            className={`whitespace-nowrap cursor-pointer rounded-full px-4 py-2 text-xs font-semibold transition-all ${
               activeRole === role.value
                 ? "bg-primary text-white"
                 : "bg-card border border-border text-secondary-foreground hover:bg-secondary hover:text-foreground"

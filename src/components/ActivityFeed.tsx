@@ -70,7 +70,7 @@ export default function ActivityFeed() {
           </h3>
           <p className="text-sm text-muted-foreground">Latest updates</p>
         </div>
-        <button className="text-xs font-medium text-primary hover:text-primary-dark transition-colors">
+        <button className="text-xs cursor-pointer font-medium text-primary hover:text-primary-dark transition-colors">
           View All
         </button>
       </div>

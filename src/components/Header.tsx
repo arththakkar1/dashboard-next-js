@@ -54,11 +54,11 @@ export default function Header({
       </div>
 
       {/* Right: Actions */}
-      <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+      <div className="flex  shrink-0 items-center gap-1 sm:gap-2">
         {/* Theme Toggle */}
         <button
           onClick={toggleTheme}
-          className="relative flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl text-muted-foreground transition-all hover:bg-secondary hover:text-foreground hover:scale-105 active:scale-95"
+          className="relative cursor-pointer flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl text-muted-foreground transition-all hover:bg-secondary hover:text-foreground hover:scale-105 active:scale-95"
           title={
             theme === "light" ? "Switch to dark mode" : "Switch to light mode"
           }
@@ -71,7 +71,7 @@ export default function Header({
         </button>
 
         {/* Notifications */}
-        <button className="relative flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">
+        <button className="relativ cursor-pointer flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">
           <Bell className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
           <span className="absolute right-1 top-1 sm:right-1.5 sm:top-1.5 h-2 w-2 rounded-full bg-danger animate-pulse-dot" />
         </button>
@@ -79,7 +79,7 @@ export default function Header({
         <div className="hidden sm:block mx-2 h-8 w-px bg-border" />
 
         {/* User profile */}
-        <button className="flex items-center gap-2 rounded-xl px-1.5 py-1.5 sm:px-2 transition-colors hover:bg-secondary">
+        <button className="flex cursor-pointer items-center gap-2 rounded-xl px-1.5 py-1.5 sm:px-2 transition-colors hover:bg-secondary">
           <div className="flex h-7 w-7 sm:h-8 sm:w-8 shrink-0 items-center justify-center rounded-lg bg-linear-to-br from-primary to-primary-dark text-xs sm:text-sm font-bold text-white">
             A
           </div>

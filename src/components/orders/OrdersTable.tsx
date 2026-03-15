@@ -271,7 +271,7 @@ export default function OrdersTable({
         <div className="flex items-center gap-2">
           <button
             onClick={onNewOrder}
-            className="flex items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-xs font-medium text-white shadow-lg shadow-primary/25 transition-all hover:bg-primary-dark hover:scale-105 active:scale-95"
+            className="flex cursor-pointer items-center gap-1.5 rounded-lg bg-primary px-4 py-2 text-xs font-medium text-white shadow-lg shadow-primary/25 transition-all hover:bg-primary-dark hover:scale-105 active:scale-95"
           >
             + New Order
           </button>
@@ -501,7 +501,7 @@ export default function OrdersTable({
           <button
             onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
             disabled={currentPage === 1}
-            className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex h-8 w-8 cursor-pointer sm:h-9 sm:w-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <ChevronLeft className="h-4 w-4" />
           </button>
@@ -509,7 +509,7 @@ export default function OrdersTable({
             <button
               key={page}
               onClick={() => setCurrentPage(page)}
-              className={`flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg text-xs sm:text-sm font-medium transition-colors ${
+              className={`flex h-8 w-8 cursor-pointer sm:h-9 sm:w-9 items-center justify-center rounded-lg text-xs sm:text-sm font-medium transition-colors ${
                 currentPage === page
                   ? "bg-primary text-white shadow-lg shadow-primary/25"
                   : "border border-border bg-card text-muted-foreground hover:bg-secondary hover:text-foreground"
@@ -521,7 +521,7 @@ export default function OrdersTable({
           <button
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
             disabled={currentPage === totalPages}
-            className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground disabled:opacity-40 disabled:cursor-not-allowed"
+            className="flex h-8 w-8 cursor-pointer sm:h-9 sm:w-9 items-center justify-center rounded-lg border border-border bg-card text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <ChevronRight className="h-4 w-4" />
           </button>
