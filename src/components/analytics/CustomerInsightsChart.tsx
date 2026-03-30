@@ -94,7 +94,7 @@ export default function CustomerInsightsChart() {
       </div>
 
       <div className="h-72 w-full min-w-0">
-        <ResponsiveContainer width="100%" height="100%" minWidth={0}>
+        <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={1}>
           <LineChart
             data={data}
             margin={{ top: 5, right: 5, left: -10, bottom: 0 }}

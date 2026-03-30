@@ -3,7 +3,7 @@
 import { Search, Bell, Sun, Moon, ChevronDown, Menu } from "lucide-react";
 import { useTheme } from "@/components/ThemeProvider";
 import SearchModal from "./SearchModal";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface HeaderProps {
   title?: string;
@@ -18,7 +18,19 @@ export default function Header({
 }: HeaderProps) {
   const { theme, toggleTheme } = useTheme();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [shortcutKey, setShortcutKey] = useState("⌘K");
+  const notificationsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (notificationsRef.current && !notificationsRef.current.contains(event.target as Node)) {
+        setIsNotificationsOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   useEffect(() => {
     if (
@@ -93,10 +105,92 @@ export default function Header({
         </button>
 
         {/* Notifications */}
-        <button className="relativ cursor-pointer flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">
-          <Bell className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
-          <span className="absolute right-1 top-1 sm:right-1.5 sm:top-1.5 h-2 w-2 rounded-full bg-danger animate-pulse-dot" />
-        </button>
+        <div className="relative" ref={notificationsRef}>
+          <button
+            onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
+            className={`relative cursor-pointer flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-xl transition-colors hover:bg-secondary hover:text-foreground ${
+              isNotificationsOpen ? "bg-secondary text-foreground" : "text-muted-foreground"
+            }`}
+          >
+            <Bell className="h-4 w-4 sm:h-4.5 sm:w-4.5" />
+            <span className="absolute right-1 top-1 sm:right-1.5 sm:top-1.5 h-2 w-2 rounded-full bg-danger animate-pulse-dot" />
+          </button>
+
+          {/* Notification Dropdown */}
+          {isNotificationsOpen && (
+            <div className="absolute right-0 mt-2 w-80 sm:w-88 rounded-xl border border-border bg-card shadow-lg z-50 overflow-hidden transform opacity-100 scale-100 transition-all duration-200 origin-top-right">
+              <div className="p-4 border-b border-border flex justify-between items-center bg-card/50 backdrop-blur-sm">
+                <div className="flex items-center gap-2">
+                  <h3 className="font-semibold text-foreground">Notifications</h3>
+                  <span className="flex h-5 w-5 items-center justify-center rounded-full bg-primary/10 text-[10px] font-medium text-primary">
+                    3
+                  </span>
+                </div>
+                <button 
+                  onClick={() => setIsNotificationsOpen(false)}
+                  className="text-xs text-muted-foreground hover:text-primary transition-colors cursor-pointer"
+                >
+                  Mark all as read
+                </button>
+              </div>
+              
+              <div className="max-h-[320px] overflow-y-auto">
+                {/* Notification Item 1 */}
+                <div className="p-4 border-b border-border hover:bg-secondary/50 cursor-pointer transition-colors">
+                  <div className="flex gap-3">
+                    <div className="h-9 w-9 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                      <Bell className="h-4 w-4" />
+                    </div>
+                    <div className="flex-1 space-y-1 text-left min-w-0">
+                      <p className="text-sm font-medium text-foreground leading-tight">New Order #4829</p>
+                      <p className="text-[11px] text-muted-foreground line-clamp-2 leading-snug">Table 4 has placed a new order for 2x Margherita Pizza and 2x Coke.</p>
+                      <p className="text-[10px] text-muted-foreground font-medium mt-1">2 mins ago</p>
+                    </div>
+                    <div className="w-2 h-2 rounded-full bg-primary shrink-0 mt-1.5" />
+                  </div>
+                </div>
+
+                {/* Notification Item 2 */}
+                <div className="p-4 border-b border-border hover:bg-secondary/50 cursor-pointer transition-colors">
+                  <div className="flex gap-3">
+                    <div className="h-9 w-9 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center shrink-0">
+                      <Bell className="h-4 w-4" />
+                    </div>
+                    <div className="flex-1 space-y-1 text-left min-w-0">
+                      <p className="text-sm font-medium text-foreground leading-tight">Low Inventory Alert</p>
+                      <p className="text-[11px] text-muted-foreground line-clamp-2 leading-snug">Tomatoes and Mozzarella Cheese are running low in stock. Please restock soon.</p>
+                      <p className="text-[10px] text-muted-foreground font-medium mt-1">1 hour ago</p>
+                    </div>
+                    <div className="w-2 h-2 rounded-full bg-primary shrink-0 mt-1.5" />
+                  </div>
+                </div>
+
+                {/* Notification Item 3 */}
+                <div className="p-4 hover:bg-secondary/50 cursor-pointer transition-colors">
+                  <div className="flex gap-3">
+                    <div className="h-9 w-9 rounded-full bg-emerald-500/10 text-emerald-500 flex items-center justify-center shrink-0">
+                      <Bell className="h-4 w-4" />
+                    </div>
+                    <div className="flex-1 space-y-1 text-left min-w-0">
+                      <p className="text-sm font-medium text-foreground leading-tight">Payment Successful</p>
+                      <p className="text-[11px] text-muted-foreground line-clamp-2 leading-snug">Table 2 has paid their bill of $45.00 via Credit Card.</p>
+                      <p className="text-[10px] text-muted-foreground font-medium mt-1">2 hours ago</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="p-3 border-t border-border bg-card/50 text-center">
+                <button 
+                  onClick={() => setIsNotificationsOpen(false)}
+                  className="text-sm text-primary hover:text-primary/80 font-medium transition-colors cursor-pointer"
+                >
+                  View all notifications
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
 
         <div className="hidden sm:block mx-2 h-8 w-px bg-border" />
 
