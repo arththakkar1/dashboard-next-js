@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { AppShellProvider } from "@/components/AppShellProvider";
 import AppShell from "@/components/AppShell";
+// @ts-ignore: allow importing global CSS without type declarations
 import "./globals.css";
 
 const geistSans = Geist({
@@ -89,9 +90,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${geistSans.className} antialiased`}
-      >
+      <body className={`${geistSans.className} antialiased`}>
         <ThemeProvider>
           <AppShellProvider>
             <AppShell>{children}</AppShell>
